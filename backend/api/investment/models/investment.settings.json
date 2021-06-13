@@ -1,0 +1,57 @@
+{
+  "kind": "collectionType",
+  "collectionName": "investments",
+  "info": {
+    "name": "investment",
+    "description": ""
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string"
+    },
+    "thumbnail": {
+      "model": "file",
+      "via": "related",
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos"
+      ],
+      "plugin": "upload",
+      "required": false,
+      "pluginOptions": {}
+    },
+    "short_description": {
+      "type": "text"
+    },
+    "full_description": {
+      "type": "richtext"
+    },
+    "images": {
+      "collection": "file",
+      "via": "related",
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos"
+      ],
+      "plugin": "upload",
+      "required": false,
+      "pluginOptions": {}
+    },
+    "apartaments": {
+      "collection": "apartament",
+      "via": "investment"
+    },
+    "storeys": {
+      "collection": "storey",
+      "via": "investment"
+    }
+  }
+}

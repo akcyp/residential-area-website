@@ -1,0 +1,51 @@
+{
+  "kind": "collectionType",
+  "collectionName": "apartaments",
+  "info": {
+    "name": "apartament"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string"
+    },
+    "area": {
+      "type": "decimal"
+    },
+    "price_per_square_meter": {
+      "type": "integer"
+    },
+    "type": {
+      "type": "enumeration",
+      "enum": [
+        "primary",
+        "secondary"
+      ]
+    },
+    "tier": {
+      "type": "integer"
+    },
+    "polygon_mask": {
+      "type": "pointlist",
+      "columnType": "longtext"
+    },
+    "status": {
+      "type": "enumeration",
+      "enum": [
+        "available",
+        "reservation",
+        "sold"
+      ],
+      "default": "available"
+    },
+    "investment": {
+      "via": "apartaments",
+      "model": "investment"
+    }
+  }
+}

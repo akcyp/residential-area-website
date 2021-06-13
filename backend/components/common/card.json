@@ -1,0 +1,20 @@
+{
+  "collectionName": "components_common_cards",
+  "info": {
+    "name": "Card",
+    "icon": "address-card",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "Heading": {
+      "type": "string"
+    },
+    "Content": {
+      "type": "richtext"
+    },
+    "icon": {
+      "type": "string"
+    }
+  }
+}
