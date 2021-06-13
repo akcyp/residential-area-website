@@ -27,7 +27,7 @@ cd backend && npm install
 cd ..
 ```
 
-- Run backend and frontend (in diffirend consoles)
+- Run backend and frontend (in diffirent consoles)
 
 ```bash
 # Console #1
