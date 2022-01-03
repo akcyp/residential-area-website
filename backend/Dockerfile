@@ -1,10 +1,10 @@
-FROM node:14-alpine
-WORKDIR /usr/app
+FROM strapi/base
+WORKDIR /srv/app
 
 COPY ["./package*.json", "./yarn.lock", "./"]
 RUN yarn install --frozen-lockfile
 
-COPY . .
+ENV NODE_ENV production
 RUN yarn build
 
-CMD ["yarn", "develop"]
+CMD ["yarn", "start"]
