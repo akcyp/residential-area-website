@@ -1,0 +1,33 @@
+{
+  "kind": "collectionType",
+  "collectionName": "storeys",
+  "info": {
+    "singularName": "storey",
+    "pluralName": "storeys",
+    "displayName": "Storey"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "tier": {
+      "type": "integer"
+    },
+    "plan": {
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos"
+      ],
+      "type": "media",
+      "multiple": false
+    },
+    "investment": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::investment.investment",
+      "inversedBy": "storeys"
+    }
+  }
+}
