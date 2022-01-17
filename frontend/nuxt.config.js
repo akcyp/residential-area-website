@@ -43,7 +43,7 @@ export default {
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: ['@nuxtjs/axios'],
   axios: {
-    baseURL: 'http://localhost:1337',
+    baseURL: process.env.BASE_URL || 'http://localhost:1337',
   },
 
   // Vuetify module configuration: https://go.nuxtjs.dev/config-vuetify

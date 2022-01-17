@@ -1,5 +1,21 @@
 /* eslint-disable camelcase */
 
+export interface APIResponse<T> {
+  data: {
+    id: number
+    attributes: T
+  }
+  meta: {}
+}
+
+export interface APIBulkResponse<T> {
+  data: {
+    id: number,
+    attributes: T
+  }[]
+  meta: {}
+}
+
 export interface APIImageFormatData {
   ext: string
   hash: string
@@ -11,8 +27,7 @@ export interface APIImageFormatData {
   size: number
 }
 
-export interface APIImageData extends APIImageFormatData {
-  id: number
+export type APIImageData = APIImageFormatData & {
   alternativeText: string
   caption: string
   formats: {
@@ -21,46 +36,48 @@ export interface APIImageData extends APIImageFormatData {
   }
 }
 
-export interface APICardData {
-  id: number
-  Heading: string
-  Content: string
-  icon: string
-}
+export type APIHomepageData = APIResponse<{
+  heading: string
+  subHeading: string
+  contentTitle: string
+  content: string
+  createdAt: string
+  updatedAt: string
+  publishedAt: string
+  parallax: APIResponse<APIImageData>
+  Cards: {
+    id: number
+    heading: string
+    content: string
+    icon: string | null
+  }[]
+}>
 
-export interface APIHomepageData {
-  Content: string
-  ContentTitle: string
-  Heading: string
-  Subheading: string
-  parallax: APIImageData
-  Cards: APICardData[]
-}
-
-export interface APIApartamentData {
-  id: number
+export type InvestmentsData = {
   name: string
-  tier: number
-  polygon_mask: string
-  price_per_square_meter: number
-  area: number
-  status: 'available' | 'reservation' | 'sold'
-  type: 'primary' | 'secondary'
+  shortDescription: string
+  fullDescription: string
+  thumbnail: APIResponse<APIImageData>
+  images: APIBulkResponse<APIImageData>
+  storeys: APIBulkResponse<{
+    tier: number
+    plan: APIResponse<APIImageData>
+  }>
+  apartaments: APIBulkResponse<{
+    name: string
+    area: number
+    pricePerSquareMeter: number
+    type: 'primary' | 'secondary'
+    tier: number
+    status: 'available' | 'reservation' | 'sold'
+    polygonMask: string
+  }>
 }
 
-export interface APIStoreyData {
-  id: number
+export type APIStoreyData = APIResponse<{
   tier: number
-  plan: APIImageData
-}
+  plan: APIResponse<APIImageData>
+}>
 
-export interface APIInvestmentData {
-  id: number
-  name: string
-  short_description: string
-  full_description: string
-  thumbnail: APIImageData
-  images: APIImageData[]
-  storeys: APIStoreyData[]
-  apartaments: APIApartamentData[]
-}
+export type APIInvestmentData = APIResponse<InvestmentsData>
+export type APIInvestmentsData = APIBulkResponse<InvestmentsData>
