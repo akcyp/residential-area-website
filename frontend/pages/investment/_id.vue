@@ -77,7 +77,7 @@ export default Vue.extend({
   components: {
     ParallaxHeader,
   },
-  async asyncData({ $axios, route: { params }, error }) {
+  async asyncData({ $axios, env, route: { params }, error }) {
     const { id } = params
     let response: APIInvestmentData
     try {
@@ -97,10 +97,10 @@ export default Vue.extend({
         heading: attributes.name,
         fullDescription: attributes.fullDescription,
         thumbnail: {
-          url: $axios.defaults.baseURL + attributes.thumbnail.data.attributes.url,
+          url: env.uploadsURL + attributes.thumbnail.data.attributes.url,
         },
         images: (attributes.images.data || []).map(({ attributes }) => ({
-          url: $axios.defaults.baseURL + attributes.url,
+          url: env.uploadsURL + attributes.url,
         })),
       } as InvestmentInfoData,
       floors: (attributes.storeys.data || [])
@@ -109,7 +109,7 @@ export default Vue.extend({
           id: id,
           tier: attrs.tier,
           plan: {
-            url: $axios.defaults.baseURL + attrs.plan.data.attributes.url,
+            url: env.uploadsURL + attrs.plan.data.attributes.url,
             width: attrs.plan.data.attributes.width,
             height: attrs.plan.data.attributes.height,
           },

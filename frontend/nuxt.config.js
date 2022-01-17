@@ -40,6 +40,11 @@ export default {
     '@nuxtjs/vuetify',
   ],
 
+  env: {
+    baseURL: process.env.BASE_URL || 'http://localhost:1337',
+    uploadsURL: process.env.UPLOADS_URL || 'http://localhost:1337'
+  },
+
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: ['@nuxtjs/axios'],
   axios: {

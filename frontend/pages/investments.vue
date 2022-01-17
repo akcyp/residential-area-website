@@ -27,7 +27,7 @@ export default Vue.extend({
   components: {
     ParallaxHeader,
   },
-  async asyncData({ $axios }) {
+  async asyncData({ $axios, env }) {
     const { data } = await $axios.$get<APIInvestmentsData>('/api/investments?populate=*')
     return {
       list: data.map(({ id, attributes }) => ({
@@ -35,7 +35,7 @@ export default Vue.extend({
         name: attributes.name,
         shortDescription: attributes.shortDescription,
         thumbnail: {
-          url: $axios.defaults.baseURL + attributes.thumbnail.data.attributes.url,
+          url: env.uploadsURL + attributes.thumbnail.data.attributes.url,
         },
       })) as InvestmentData[],
     }

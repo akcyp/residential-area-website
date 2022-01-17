@@ -39,7 +39,16 @@ services:
       dockerfile: Dockerfile
     environment:
       BASE_URL: http://strapi:1337
+      UPLOADS_URL: http://localhost:80
     depends_on:
       - strapi
     ports:
-      - '3000:3000'
+      - '3000'
+
+  nginx:
+    build:
+      context: ./nginx
+      dockerfile: Dockerfile
+    restart: always
+    ports:
+      - '80:80'
