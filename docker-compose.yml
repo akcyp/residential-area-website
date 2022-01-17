@@ -32,3 +32,14 @@ services:
       POSTGRES_PASSWORD: strapi
     volumes:
       - ./backend/data:/var/lib/postgresql/data
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    environment:
+      BASE_URL: http://strapi:1337
+    depends_on:
+      - strapi
+    ports:
+      - '3000:3000'
