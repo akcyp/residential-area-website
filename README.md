@@ -4,11 +4,10 @@ Expermimental SSR app for house estate company made with **Nuxt** and **Strapi**
 
 ## Preview
 
-![Screen 1](preview/ss1.jpg)
+![Screen 1](preview/ss-extra2.jpg)
 
-![Screen 2](preview/ss2.jpg)
+![Screen 1](preview/ss-extra1.jpg)
 
-![Screen 3](preview/ss3.jpg)
 
 ## Get started
 
@@ -18,20 +17,28 @@ Expermimental SSR app for house estate company made with **Nuxt** and **Strapi**
 git clone https://github.com/akcyp/residential-area-website
 ```
 
-- Install dependencies:
+- Docker auto install:
 
 ```bash
-cd frontend && npm install
-cd ..
-cd backend && npm install
-cd ..
+cd residential-area-website
+sudo docker-compose up --build
 ```
 
-- Run backend and frontend (in different consoles)
+- Frontend side: [http://localhost/](http://localhost/)
 
-```bash
-# Console #1
-cd frontend && npm run start
-# Console #2
-cd backend && npm run start
-```
+- API: [http://localhost/api/](http://localhost/api/)
+
+- Admin panel: [http://localhost/admin/](http://localhost/admin/)
+  - > Username: test@null.com \
+    > Password: Admin123
+
+
+# Gallery
+
+![Screen 1](preview/ss1.png)
+
+![Screen 2](preview/ss2.png)
+
+![Screen 3](preview/ss3.png)
+
+![Screen 3](preview/ss4.png)
