@@ -35,9 +35,6 @@ services:
     build:
       context: ./frontend
       dockerfile: Dockerfile
-    environment:
-      BASE_URL: http://strapi:1337
-      UPLOADS_URL: http://localhost:80
     depends_on:
       - strapi
     ports:

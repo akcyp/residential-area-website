@@ -1,5 +1,7 @@
 import colors from 'vuetify/es5/util/colors'
 
+const isProd = process.env.NODE_ENV === 'production'
+
 export default {
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
@@ -41,15 +43,13 @@ export default {
   ],
 
   env: {
-    baseURL: process.env.BASE_URL || 'http://localhost:1337',
-    uploadsURL: process.env.UPLOADS_URL || 'http://localhost:1337',
+    baseInternalNetURL: isProd ? 'http://strapi:1337' : 'http://localhost:80',
+    baseURL: isProd ? 'http://localhost' : 'http://localhost:80',
+    uploadsURL: isProd ? 'http://localhost' : 'http://localhost:80',
   },
 
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: ['@nuxtjs/axios'],
-  axios: {
-    baseURL: process.env.BASE_URL || 'http://localhost:1337',
-  },
 
   // Vuetify module configuration: https://go.nuxtjs.dev/config-vuetify
   vuetify: {

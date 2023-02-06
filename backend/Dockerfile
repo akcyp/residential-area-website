@@ -12,6 +12,4 @@ COPY ./ .
 RUN yarn build
 EXPOSE 1337
 
-COPY ./strapi-export.tar.gz .
-
-CMD ["yarn", "deploy"]
+CMD ["yarn", "start"]

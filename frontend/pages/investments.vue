@@ -28,7 +28,10 @@ export default Vue.extend({
     ParallaxHeader,
   },
   async asyncData({ $axios, env }) {
-    const { data } = await $axios.$get<APIInvestmentsData>('/api/investments?populate=*')
+    const { data } = await $axios.$get<APIInvestmentsData>(
+      (process.client ? env.baseURL : env.baseInternalNetURL) +
+        '/api/investments?populate=*'
+    )
     return {
       list: data.map(({ id, attributes }) => ({
         id,

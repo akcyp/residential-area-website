@@ -81,17 +81,24 @@ export default Vue.extend({
     const { id } = params
     let response: APIInvestmentData
     try {
-      response  = await $axios.$get<APIInvestmentData>(`/api/investments/${id}?populate=*`)
-      const storeys: APIInvestmentData['data']['attributes']['storeys']['data'] = [];
+      response = await $axios.$get<APIInvestmentData>(
+        (process.client ? env.baseURL : env.baseInternalNetURL) +
+          `/api/investments/${id}?populate=*`
+      )
+      const storeys: APIInvestmentData['data']['attributes']['storeys']['data'] =
+        []
       for (const { id } of response.data.attributes.storeys.data) {
-        const storey = await $axios.$get<APIStoreyData>(`/api/storeys/${id}?populate=*`)
+        const storey = await $axios.$get<APIStoreyData>(
+          (process.client ? env.baseURL : env.baseInternalNetURL) +
+            `/api/storeys/${id}?populate=*`
+        )
         storeys.push(storey.data)
       }
       response.data.attributes.storeys.data = storeys
     } catch (e) {
       return error({ statusCode: 404, message: 'Post not found' })
     }
-    const attributes = response.data.attributes;
+    const attributes = response.data.attributes
     return {
       info: {
         heading: attributes.name,
@@ -106,7 +113,7 @@ export default Vue.extend({
       floors: (attributes.storeys.data || [])
         .sort((a, b) => a.attributes.tier - b.attributes.tier)
         .map(({ id, attributes: attrs }) => ({
-          id: id,
+          id,
           tier: attrs.tier,
           plan: {
             url: env.uploadsURL + attrs.plan.data.attributes.url,
