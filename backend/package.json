@@ -7,24 +7,26 @@
     "develop": "strapi develop",
     "start": "strapi start",
     "build": "strapi build",
-    "strapi": "strapi"
+    "strapi": "strapi",
+    "import:db": "strapi import -f strapi-export.tar.gz --force",
+    "deploy": "yarn run import:db && yarn start"
   },
   "devDependencies": {},
   "dependencies": {
-    "@strapi/plugin-i18n": "4.0.2",
-    "@strapi/plugin-users-permissions": "4.0.2",
-    "@strapi/strapi": "4.0.2",
+    "@strapi/plugin-i18n": "4.6.0",
+    "@strapi/plugin-users-permissions": "4.6.0",
+    "@strapi/strapi": "4.6.0",
     "pg": "8.6.0",
-    "strapi-plugin-point-list": "^0.2.2"
+    "strapi-plugin-point-list": "^4.4.4"
   },
   "author": {
     "name": "A Strapi developer"
   },
   "strapi": {
-    "uuid": "31c93ee4-11a3-4d0b-978a-c8ec90145fbf"
+    "uuid": "75dddae7-f277-4c7c-9650-768d92fb5dec"
   },
   "engines": {
-    "node": ">=12.x.x <=16.x.x",
+    "node": ">=14.19.1 <=18.x.x",
     "npm": ">=6.0.0"
   },
   "license": "MIT"

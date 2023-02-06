@@ -42,7 +42,7 @@ export default {
 
   env: {
     baseURL: process.env.BASE_URL || 'http://localhost:1337',
-    uploadsURL: process.env.UPLOADS_URL || 'http://localhost:1337'
+    uploadsURL: process.env.UPLOADS_URL || 'http://localhost:1337',
   },
 
   // Modules: https://go.nuxtjs.dev/config-modules

@@ -4,8 +4,7 @@
   "info": {
     "singularName": "homepage",
     "pluralName": "homepages",
-    "displayName": "Homepage",
-    "description": ""
+    "displayName": "Homepage"
   },
   "options": {
     "draftAndPublish": true
@@ -33,11 +32,7 @@
       "type": "media",
       "multiple": false,
       "required": false,
-      "allowedTypes": [
-        "images",
-        "files",
-        "videos"
-      ]
+      "allowedTypes": ["images", "files", "videos"]
     }
   }
 }

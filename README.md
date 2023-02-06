@@ -29,8 +29,8 @@ sudo docker-compose up --build
 - API: [http://localhost/api/](http://localhost/api/)
 
 - Admin panel: [http://localhost/admin/](http://localhost/admin/)
-  - > Username: test@null.com \
-    > Password: Admin123
+  - > Username: admin@example.com \
+    > Password: AdminPassword1
 
 
 # Gallery

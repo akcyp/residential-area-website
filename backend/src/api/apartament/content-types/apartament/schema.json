@@ -4,8 +4,7 @@
   "info": {
     "singularName": "apartament",
     "pluralName": "apartaments",
-    "displayName": "Apartament",
-    "description": ""
+    "displayName": "Apartament"
   },
   "options": {
     "draftAndPublish": true
@@ -23,26 +22,19 @@
     },
     "type": {
       "type": "enumeration",
-      "enum": [
-        "primary",
-        "secondary"
-      ],
+      "enum": ["primary", "secondary"],
       "default": "primary"
     },
     "tier": {
       "type": "integer"
     },
     "polygonMask": {
-      "type": "pointlist",
-      "columnType": "longtext"
+      "type": "customField",
+      "customField": "plugin::strapi-plugin-point-list.point-list"
     },
     "status": {
       "type": "enumeration",
-      "enum": [
-        "available",
-        "reservation",
-        "sold"
-      ],
+      "enum": ["available", "reservation", "sold"],
       "default": "available"
     }
   }
