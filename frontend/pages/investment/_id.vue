@@ -39,7 +39,7 @@ import Vue from 'vue'
 import ParallaxHeader from '~/components/ParallaxHeader.vue'
 import addOrdinalSuffix from '~/assets/addOrdinalSuffix'
 
-import type { APIInvestmentData } from '~/assets/api'
+import type { APIInvestmentData, APIStoreyData } from '~/assets/api'
 
 interface InvestmentInfoData {
   heading: string
@@ -77,44 +77,58 @@ export default Vue.extend({
   components: {
     ParallaxHeader,
   },
-  async asyncData({ $axios, route: { params }, error }) {
+  async asyncData({ $axios, env, route: { params }, error }) {
     const { id } = params
-    let data: APIInvestmentData
+    let response: APIInvestmentData
     try {
-      data = await $axios.$get(`/api/investments/${id}`)
+      response = await $axios.$get<APIInvestmentData>(
+        (process.client ? env.baseURL : env.baseInternalNetURL) +
+          `/api/investments/${id}?populate=*`
+      )
+      const storeys: APIInvestmentData['data']['attributes']['storeys']['data'] =
+        []
+      for (const { id } of response.data.attributes.storeys.data) {
+        const storey = await $axios.$get<APIStoreyData>(
+          (process.client ? env.baseURL : env.baseInternalNetURL) +
+            `/api/storeys/${id}?populate=*`
+        )
+        storeys.push(storey.data)
+      }
+      response.data.attributes.storeys.data = storeys
     } catch (e) {
       return error({ statusCode: 404, message: 'Post not found' })
     }
+    const attributes = response.data.attributes
     return {
       info: {
-        heading: data.name,
-        fullDescription: data.full_description,
+        heading: attributes.name,
+        fullDescription: attributes.fullDescription,
         thumbnail: {
-          url: $axios.defaults.baseURL + data.thumbnail.url,
+          url: env.uploadsURL + attributes.thumbnail.data.attributes.url,
         },
-        images: data.images.map(({ url }) => ({
-          url: $axios.defaults.baseURL + url,
+        images: (attributes.images.data || []).map(({ attributes }) => ({
+          url: env.uploadsURL + attributes.url,
         })),
       } as InvestmentInfoData,
-      floors: data.storeys
-        .sort((a, b) => a.tier - b.tier)
-        .map((d) => ({
-          id: d.id,
-          tier: d.tier,
+      floors: (attributes.storeys.data || [])
+        .sort((a, b) => a.attributes.tier - b.attributes.tier)
+        .map(({ id, attributes: attrs }) => ({
+          id,
+          tier: attrs.tier,
           plan: {
-            url: $axios.defaults.baseURL + d.plan.url,
-            width: d.plan.width,
-            height: d.plan.height,
+            url: env.uploadsURL + attrs.plan.data.attributes.url,
+            width: attrs.plan.data.attributes.width,
+            height: attrs.plan.data.attributes.height,
           },
-          apartaments: data.apartaments
-            .filter(({ tier }) => d.tier === tier)
-            .map((ap) => ({
-              id: ap.id,
-              name: ap.name,
-              area: ap.area,
-              price: ap.price_per_square_meter * ap.area,
-              status: ap.status,
-              polygon: ap.polygon_mask,
+          apartaments: (attributes.apartaments.data || [])
+            .filter(({ attributes: { tier } }) => tier === attrs.tier)
+            .map(({ id, attributes: attrs }) => ({
+              id,
+              name: attrs.name,
+              area: attrs.area,
+              price: attrs.pricePerSquareMeter * attrs.area,
+              status: attrs.status,
+              polygon: attrs.polygonMask,
             })),
         })) as StoreyData[],
     } as const

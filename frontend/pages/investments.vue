@@ -12,7 +12,7 @@
 import Vue from 'vue'
 import ParallaxHeader from '~/components/ParallaxHeader.vue'
 
-import type { APIInvestmentData } from '~/assets/api'
+import { APIInvestmentsData } from '~/assets/api'
 
 interface InvestmentData {
   id: number
@@ -27,15 +27,18 @@ export default Vue.extend({
   components: {
     ParallaxHeader,
   },
-  async asyncData({ $axios }) {
-    const data: APIInvestmentData[] = await $axios.$get('/api/investments')
+  async asyncData({ $axios, env }) {
+    const { data } = await $axios.$get<APIInvestmentsData>(
+      (process.client ? env.baseURL : env.baseInternalNetURL) +
+        '/api/investments?populate=*'
+    )
     return {
-      list: data.map((d) => ({
-        id: d.id,
-        name: d.name,
-        shortDescription: d.short_description,
+      list: data.map(({ id, attributes }) => ({
+        id,
+        name: attributes.name,
+        shortDescription: attributes.shortDescription,
         thumbnail: {
-          url: $axios.defaults.baseURL + d.thumbnail.url,
+          url: env.uploadsURL + attributes.thumbnail.data.attributes.url,
         },
       })) as InvestmentData[],
     }

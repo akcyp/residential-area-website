@@ -44,19 +44,22 @@ export default Vue.extend({
   components: {
     ParallaxHeader,
   },
-  async asyncData({ $axios }) {
-    const data: APIHomepageData = await $axios.$get('/api/homepage')
+  async asyncData({ $axios, env }) {
+    const { data } = await $axios.$get<APIHomepageData>(
+      (process.client ? env.baseURL : env.baseInternalNetURL) +
+        '/api/homepage?populate=*'
+    )
     return {
-      heading: data.Heading,
-      subheading: data.Subheading,
-      contentTitle: data.ContentTitle,
-      content: data.Content,
-      parallax: ($axios.defaults.baseURL || '') + data.parallax.url,
-      cards: data.Cards.map((d) => ({
+      heading: data.attributes.heading,
+      subheading: data.attributes.subHeading,
+      contentTitle: data.attributes.contentTitle,
+      content: data.attributes.content,
+      parallax: env.uploadsURL + data.attributes.parallax.data.attributes.url,
+      cards: data.attributes.Cards.map((d) => ({
         id: d.id,
-        title: d.Heading,
-        content: d.Content,
-        icon: d.icon,
+        title: d.heading,
+        content: d.content,
+        icon: d.icon || '',
       })) as CardData[],
     }
   },
