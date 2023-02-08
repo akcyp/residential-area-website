@@ -24,6 +24,12 @@ cd residential-area-website
 sudo docker-compose up --build
 ```
 
+- Import default data
+
+```bash
+docker exec -it $(docker ps -q -f name=residential-area-website-strapi) yarn import:db
+```
+
 - Frontend side: [http://localhost/](http://localhost/)
 
 - API: [http://localhost/api/](http://localhost/api/)
