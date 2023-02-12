@@ -21,10 +21,10 @@ git clone https://github.com/akcyp/residential-area-website
 
 ```bash
 cd residential-area-website
-sudo docker-compose up --build
+docker-compose up --build
 ```
 
-- Import default data
+- Import sample backend data
 
 ```bash
 docker exec -it $(docker ps -q -f name=residential-area-website-strapi) yarn import:db
